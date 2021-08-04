@@ -36,23 +36,61 @@ namespace Phonebook
         public Dictionary<string, string> Phonebook { get => phonebook; set => phonebook = value; }
 
 
+        // Inspected
         public int operationChoice(){
+            
+            int tempChoice = 0;
+            
+            bool flag = true;
+            
+            while(flag){
 
-            Console.Write("\n-> Your Choice : ");
-            int choice = int.Parse(Console.ReadLine());
+                Console.Write("\n-> Your Choice : ");
+                if(int.TryParse(Console.ReadLine(),out int choice)){
 
-            return choice;
+                    tempChoice = choice;
+                    flag = false;
+                    
+                    
+                }else{
+
+                    Console.WriteLine("-> Invalid Input");
+
+                }
+
+            }
+
+
+            return tempChoice;
+            
 
         }
 
+        // Inspected
         public void addNewNumber(){
 
             Console.Write("\n-> Enter the name".PadRight(30)+": ");
             string name = Console.ReadLine().ToUpper();
             Console.Write("\n-> Enter the surname".PadRight(30)+": ");
             string surname = Console.ReadLine().ToUpper();
-            Console.Write("\n-> Enter the phone number".PadRight(30)+": ");
-            string number = Console.ReadLine();
+            
+            string number;
+
+            while(true){
+                
+                Console.Write("\n-> Enter the phone number".PadRight(30)+": ");
+                if(long.TryParse(Console.ReadLine(),out long longNumber)){
+
+                    number = longNumber.ToString();
+                    break;
+
+                }else{
+
+                    Console.WriteLine("-> This is not a phone number!");
+
+                }
+
+            }
             
             string owner = name+" "+surname;
 
@@ -63,6 +101,7 @@ namespace Phonebook
 
         }
 
+        // Inspected
         public void deleteNumber(){
 
             Console.Write("\n-> Enter the name or surname of the person you want to delete : ");
@@ -79,9 +118,24 @@ namespace Phonebook
                 if(key.Contains(input)){
 
                     isThereAny = true;
-                    
-                    Console.Write("\n-> ["+key+"] is about to be deleted. Do you confirm?\n-> (Y) or (N) : ");
-                    char yesNo = char.Parse(Console.ReadLine().ToUpper());
+                    char yesNo;
+
+                    while(true){
+                        
+                        Console.Write("\n-> ["+key+"] is about to be deleted. Do you confirm?\n-> (Y) or (N) : ");
+                        if(char.TryParse(Console.ReadLine().ToUpper(),out char tempChar)){
+
+                            yesNo = tempChar;
+                            break;
+                        
+                        }else{
+
+                            Console.WriteLine("-> Invalid Input.");
+
+                        }
+
+
+                    }
 
                     switch(yesNo){
 
@@ -105,11 +159,27 @@ namespace Phonebook
                 
                 if(isThereAny == false){
 
+                    int choice;
                     Console.WriteLine("-> The name you searched for isn't found in the phonebook.");
                     Console.WriteLine("-> Press (1) : Terminate this operation");
                     Console.WriteLine("-> Press (2) : Try again");
-                    Console.Write("\n-> (1) or (2) :");
-                    int choice = int.Parse(Console.ReadLine());
+                    
+                    while(true){
+                        
+                        Console.Write("\n-> (1) or (2) :");
+                        if(int.TryParse(Console.ReadLine(),out int tempInt)){
+
+                            choice = tempInt;
+                            break;
+
+                        }else{
+
+                            Console.WriteLine("-> Invalid Input");
+
+                        }
+
+
+                    }
 
                     switch(choice){
 
@@ -120,6 +190,7 @@ namespace Phonebook
                         case 2:    
                             deleteNumber();
                             break;
+                    
                     }
 
                     
